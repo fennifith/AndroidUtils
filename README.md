@@ -20,7 +20,7 @@ allprojects {
 To add the dependency, copy this line into your app module's build.gradle file.
 
 ```gradle
-implementation 'me.jfenn:AndroidUtils:0.0.1'
+implementation 'me.jfenn:AndroidUtils:0.0.2'
 ```
 
 ### Methods

@@ -7,7 +7,7 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 
-import me.jfenn.androidutils.DimenUtils;
+import static me.jfenn.androidutils.DimenUtilsKt.dpToPx;
 
 public class SeekBarDrawable extends ClipDrawable {
 
@@ -16,7 +16,7 @@ public class SeekBarDrawable extends ClipDrawable {
 
     public SeekBarDrawable(Drawable drawable) {
         super(drawable, Gravity.START, ClipDrawable.HORIZONTAL);
-        height = DimenUtils.dpToPx(2);
+        height = dpToPx(2);
     }
 
     @Override

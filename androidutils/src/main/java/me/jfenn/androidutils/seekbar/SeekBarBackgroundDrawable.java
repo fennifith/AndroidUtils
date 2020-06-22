@@ -10,7 +10,8 @@ import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import me.jfenn.androidutils.DimenUtils;
+
+import static me.jfenn.androidutils.DimenUtilsKt.dpToPx;
 
 public class SeekBarBackgroundDrawable extends Drawable {
 
@@ -20,7 +21,7 @@ public class SeekBarBackgroundDrawable extends Drawable {
 
     public SeekBarBackgroundDrawable(Drawable drawable) {
         this.drawable = drawable;
-        height = DimenUtils.dpToPx(2);
+        height = dpToPx(2);
         paint = new Paint();
     }
 

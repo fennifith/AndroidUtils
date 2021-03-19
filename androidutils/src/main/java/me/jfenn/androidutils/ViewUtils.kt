@@ -20,7 +20,7 @@ inline fun <reified T> ignore(what: () -> T?) =
 
 inline fun <reified T : View> Activity.bind(@IdRes res: Int): Lazy<T?> = lazy { findView<T>(res) }
 
-inline fun <reified T : View> Fragment.bind(@IdRes res: Int): Lazy<T?>? = lazy { findView<T>(res) }
+inline fun <reified T : View> Fragment.bind(@IdRes res: Int): Lazy<T?> = lazy { findView<T>(res) }
 
 inline fun <reified T : View> View.bind(@IdRes res: Int): Lazy<T?> = lazy { findView<T>(res) }
 

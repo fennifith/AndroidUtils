@@ -36,25 +36,23 @@ inline fun <reified T> pref(
         defaultValue: T? = null
 ) = object : ReadOnlyProperty<Any?, TypedPreference<T>> {
 
-    val pref: TypedPreference<T>? = null
+    var pref: TypedPreference<T>? = null
 
-    override fun getValue(thisRef: Any?, property: KProperty<*>) = pref ?: run {
-        object : TypedPreference<T> {
+    override fun getValue(thisRef: Any?, property: KProperty<*>) = pref ?: object : TypedPreference<T> {
 
-            override val key = key ?: property.name
-            override val defaultValue: T? = defaultValue
+        override val key = key ?: property.name
+        override val defaultValue: T? = defaultValue
 
-            override fun get(ctx: Context): T? {
-                val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
-                return prefs[this.key] ?: this.defaultValue
-            }
-
-            override fun set(ctx: Context, value: T?) {
-                val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
-                prefs[this.key] = value
-            }
-
+        override fun get(ctx: Context): T? {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
+            return prefs[this.key] ?: this.defaultValue
         }
-    }
+
+        override fun set(ctx: Context, value: T?) {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
+            prefs[this.key] = value
+        }
+
+    }.also { pref = it }
 
 }

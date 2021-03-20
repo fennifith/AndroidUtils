@@ -11,33 +11,38 @@ private const val RED_CHANNEL = 16
 private const val GREEN_CHANNEL = 8
 private const val BLUE_CHANNEL = 0
 
-fun Int.red() = this.shr(RED_CHANNEL).and(0xFF)
-fun Int.green(): Int = this.shr(GREEN_CHANNEL).and(0xFF)
-fun Int.blue(): Int = this.shr(BLUE_CHANNEL).and(0xFF)
-fun Int.alpha(): Float = this.shr(ALPHA_CHANNEL).and(0xFF).div(255f)
+val Int.red     get() = this.shr(RED_CHANNEL).and(0xFF)
+val Int.green   get() = this.shr(GREEN_CHANNEL).and(0xFF)
+val Int.blue    get() = this.shr(BLUE_CHANNEL).and(0xFF)
+val Int.alpha   get() = this.shr(ALPHA_CHANNEL).and(0xFF).div(255f)
 
-fun Int.setColor(red: Int = red(), green: Int = green(), blue: Int = blue(), alpha: Float = alpha()): Int {
+fun Int.setColor(
+        red: Int = this.red,
+        green: Int = this.green,
+        blue: Int = this.blue,
+        alpha: Float = this.alpha
+): Int {
     return Color.argb((alpha * 255).toInt(), red, green, blue)
 }
 
 fun Int.mixColor(vararg colors: Int): Int {
-    var red: Int = red()
-    var green: Int = green()
-    var blue: Int = blue()
-    var alpha: Float = alpha()
+    var r: Int = red
+    var g: Int = green
+    var b: Int = blue
+    var a: Float = alpha
 
     for (color in colors) {
-        red += (color.red() * color.alpha()).toInt()
-        green += (color.green() * color.alpha()).toInt()
-        blue += (color.blue() * color.alpha()).toInt()
-        alpha += color.alpha()
+        r += (color.red * color.alpha).toInt()
+        g += (color.green * color.alpha).toInt()
+        b += (color.blue * color.alpha).toInt()
+        a += color.alpha
     }
 
     return Color.argb(
-            ((alpha / (colors.size + 1)) * 255).toInt(),
-            (red / alpha).toInt().coerceIn(0, 255),
-            (green / alpha).toInt().coerceIn(0, 255),
-            (blue / alpha).toInt().coerceIn(0, 255)
+            ((a / (colors.size + 1)) * 255).toInt(),
+            (r / a).toInt().coerceIn(0, 255),
+            (g / a).toInt().coerceIn(0, 255),
+            (b / a).toInt().coerceIn(0, 255)
     )
 }
 
@@ -45,9 +50,9 @@ fun Int.multiplyColor(vararg colors: Int, base: Int = 0): Int {
     val mixer = base.mixColor(*colors)
 
     return Color.rgb(
-            (red() * mixer.red() / 255).coerceIn(0, 255),
-            (green() * mixer.green() / 255).coerceIn(0, 255),
-            (blue() * mixer.blue() / 255).coerceIn(0, 255)
+            (red * mixer.red / 255).coerceIn(0, 255),
+            (green * mixer.green / 255).coerceIn(0, 255),
+            (blue * mixer.blue / 255).coerceIn(0, 255)
     )
 }
 
